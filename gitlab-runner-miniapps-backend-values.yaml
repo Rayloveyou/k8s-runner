@@ -1,0 +1,135 @@
+affinity: {}
+checkInterval: 3
+concurrent: 15
+configMaps: {}
+deploymentAnnotations: {}
+deploymentLabels: {}
+deploymentLifecycle: {}
+extraEnv: {}
+extraEnvFrom: {}
+extraObjects: []
+gitlabUrl: 
+hostAliases: []
+image:
+  image: gitlab-org/gitlab-runner
+  registry: registry.gitlab.com
+imagePullPolicy: IfNotPresent
+livenessProbe: {}
+metrics:
+  enabled: false
+  port: 9252
+  portName: metrics
+
+  serviceMonitor:
+    enabled: false
+nodeSelector: {}
+podAnnotations: {}
+podLabels: {}
+podSecurityContext:
+  fsGroup: 65533
+  runAsUser: 100
+priorityClassName: ""
+rbac:
+  clusterRoleBindingName: gitlab-runner-clusterrolebinding
+  clusterRoleName: gitlab-runner-clusterrole
+  clusterWideAccess: true
+  create: true
+  imagePullSecrets: []
+  podSecurityPolicy:
+    enabled: false
+    resourceNames:
+    - gitlab-runner
+  rules:
+  - apiGroups:
+    - ""
+    resources:
+    - '*'
+    verbs:
+    - '*'
+  - apiGroups:
+    - apps
+    resources:
+    - '*'
+    verbs:
+    - '*'
+  - apiGroups:
+    - batch
+    resources:
+    - '*'
+    verbs:
+    - '*'
+  - apiGroups:
+    - extensions
+    resources:
+    - '*'
+    verbs:
+    - '*'
+  - apiGroups:
+    - policy
+    resources:
+    - '*'
+    verbs:
+    - '*'
+  - apiGroups:
+    - networking.k8s.io
+    resources:
+    - '*'
+    verbs:
+    - '*'
+  - apiGroups:
+    - rbac.authorization.k8s.io
+    resources:
+    - '*'
+    verbs:
+    - '*'
+  serviceAccountAnnotations: {}
+  serviceAccountName: default
+readinessProbe: {}
+resources:
+  limits:
+    memory: 256Mi
+    cpu: 150m
+    ephemeral-storage: 512Mi
+  requests:
+    memory: 128Mi
+    cpu: 100m
+    ephemeral-storage: 256Mi
+runnerRegistrationToken: ""
+runners:
+  cache: {}
+  config: |
+    [[runners]]
+      [runners.kubernetes]
+        namespace = "{{.Release.Namespace}}"
+        image = "alpine"
+        privileged = true
+  configPath: ""
+  executor: kubernetes
+secrets: []
+securityContext:
+  allowPrivilegeEscalation: false
+  capabilities:
+    drop:
+    - ALL
+  privileged: false
+  readOnlyRootFilesystem: false
+  runAsNonRoot: true
+service:
+  enabled: false
+  type: ClusterIP
+serviceAccount:
+  annotations: {}
+  create: false
+  imagePullSecrets: []
+  name: default
+sessionServer:
+  enabled: false
+  serviceType: LoadBalancer
+shutdown_timeout: 0
+strategy: {}
+terminationGracePeriodSeconds: 3600
+tolerations: []
+topologySpreadConstraints: {}
+useTini: false
+volumeMounts: []
+volumes: []
